@@ -7,9 +7,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -20,7 +24,7 @@ public class SingersModelTest {
     @Mock
     ModelListener listener;
 
-    @InjectMocks
+//    @InjectMocks
     SingersModel singersModel = new SingersModel(null);
 
     @Before
@@ -30,9 +34,10 @@ public class SingersModelTest {
 
     @Test
     public void testGetSingers() throws Exception {
+        singersModel.addListener(listener);
         singersModel.updateSingers();
-        //verify(listener).onUpdate();
-        verify(listener).onError();
 
+        verify(listener,timeout(1000)).onUpdate();
+        verify(listener,timeout(1000)).onError();
     }
 }

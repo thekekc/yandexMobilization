@@ -10,7 +10,7 @@ import vm.merkurev.music.model.SingersModel;
 
 
 /**
- * An activity representing a list of Singerss. This activity
+ * An activity representing a list of Singers. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
  * lead to a {@link SingerDetailActivity} representing

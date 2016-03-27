@@ -1,67 +1,87 @@
 package vm.merkurev.music.model;
 
-import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by merkurev on 24.03.16.
  */
 public class SingerEntity {
-    private Integer id;
-    private java.lang.String avatarUrl;
-    private java.lang.String name;
-    private int songNum;
-    private int albumNum;
-    private List<String> genres;
-    private java.lang.String link;
-    private java.lang.String bio;
+//    private Integer id;
+//    private Cover cover;
+    @SerializedName("name")
+    @Expose
+    private String name;
+//    private Integer tracks;
+//    private Integer albums;
+    //    private List<String> genres;
+//    private String link;
+//    @SerializedName("description")
+//    private String description;
 
 
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
-    public java.lang.String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(java.lang.String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public java.lang.String getName() {
+     String getName() {
         return name;
     }
 
-    public void setName(java.lang.String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getSongNum() {
-        return songNum;
-    }
+//    public Integer getTracks() {
+//        return tracks;
+//    }
+//
+//    public void setTracks(Integer tracks) {
+//        this.tracks = tracks;
+//    }
+//
+//    public Integer getAlbums() {
+//        return albums;
+//    }
+//
+//    public void setAlbums(Integer albums) {
+//        this.albums = albums;
+//    }
+//
+//    public List<String> getGenres() {
+//        return genres;
+//    }
 
-    public void setSongNum(int songNum) {
-        this.songNum = songNum;
-    }
+//    public void setGenres(List<String> genres) {
+//        this.genres = genres;
+//    }
 
-    public int getAlbumNum() {
-        return albumNum;
-    }
+//
+//    public Cover getCover() {
+//        return cover;
+//    }
+//
+//    public void setCover(Cover cover) {
+//        this.cover = cover;
+//    }
 
-    public void setAlbumNum(int albumNum) {
-        this.albumNum = albumNum;
-    }
+//    public String getLink() {
+//        return link;
+//    }
+//
+//    public void setLink(String link) {
+//        this.link = link;
+//    }
 
-    public List<String> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
-
-    public java.lang.String getBio() {
-        return bio;
-    }
-
-    public void setBio(java.lang.String bio) {
-        this.bio = bio;
-    }
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
 }
