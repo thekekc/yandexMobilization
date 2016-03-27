@@ -4,22 +4,22 @@ package vm.merkurev.music.model;
  * Created by merkurev on 26.03.16.
  */
 public class Cover {
-    String small;
-    String big;
+    java.lang.String small;
+    java.lang.String big;
 
-    public String getSmall() {
+    public java.lang.String getSmall() {
         return small;
     }
 
-    public void setSmall(String small) {
+    public void setSmall(java.lang.String small) {
         this.small = small;
     }
 
-    public String getBig() {
+    public java.lang.String getBig() {
         return big;
     }
 
-    public void setBig(String big) {
+    public void setBig(java.lang.String big) {
         this.big = big;
     }
 }

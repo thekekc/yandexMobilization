@@ -3,30 +3,31 @@ package vm.merkurev.music.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by merkurev on 24.03.16.
  */
 public class SingerEntity {
-//    private Integer id;
-//    private Cover cover;
+    private Integer id;
+    private Cover cover;
     @SerializedName("name")
     @Expose
     private java.lang.String name;
-//    private Integer tracks;
-//    private Integer albums;
-    //    private List<String> genres;
-//    private String link;
-//    @SerializedName("description")
-//    private String description;
+    private Integer tracks;
+    private Integer albums;
+    private List<java.lang.String> genres;
+    private java.lang.String link;
+    @SerializedName("description")
+    private java.lang.String description;
 
+    public Integer getId() {
+        return id;
+    }
 
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     java.lang.String getName() {
         return name;
@@ -36,52 +37,52 @@ public class SingerEntity {
         this.name = name;
     }
 
-//    public Integer getTracks() {
-//        return tracks;
-//    }
-//
-//    public void setTracks(Integer tracks) {
-//        this.tracks = tracks;
-//    }
-//
-//    public Integer getAlbums() {
-//        return albums;
-//    }
-//
-//    public void setAlbums(Integer albums) {
-//        this.albums = albums;
-//    }
-//
-//    public List<String> getGenres() {
-//        return genres;
-//    }
+    public Integer getTracks() {
+        return tracks;
+    }
 
-//    public void setGenres(List<String> genres) {
-//        this.genres = genres;
-//    }
+    public void setTracks(Integer tracks) {
+        this.tracks = tracks;
+    }
 
-//
-//    public Cover getCover() {
-//        return cover;
-//    }
-//
-//    public void setCover(Cover cover) {
-//        this.cover = cover;
-//    }
+    public Integer getAlbums() {
+        return albums;
+    }
 
-//    public String getLink() {
-//        return link;
-//    }
-//
-//    public void setLink(String link) {
-//        this.link = link;
-//    }
+    public void setAlbums(Integer albums) {
+        this.albums = albums;
+    }
 
-//    public String getDescription() {
-//        return description;
-//    }
+    public List<java.lang.String> getGenres() {
+        return genres;
+    }
 //
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
+    public void setGenres(List<java.lang.String> genres) {
+        this.genres = genres;
+    }
+//
+
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
+//
+    public java.lang.String getLink() {
+        return link;
+    }
+
+    public void setLink(java.lang.String link) {
+        this.link = link;
+    }
+//
+    public java.lang.String getDescription() {
+        return description;
+    }
+
+    public void setDescription(java.lang.String description) {
+        this.description = description;
+    }
 }
