@@ -11,7 +11,7 @@ public class SingerEntity {
 //    private Cover cover;
     @SerializedName("name")
     @Expose
-    private String name;
+    private java.lang.String name;
 //    private Integer tracks;
 //    private Integer albums;
     //    private List<String> genres;
@@ -28,11 +28,11 @@ public class SingerEntity {
 //        this.id = id;
 //    }
 
-     String getName() {
+    java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
