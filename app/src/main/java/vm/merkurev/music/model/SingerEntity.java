@@ -13,13 +13,13 @@ public class SingerEntity {
     private Cover cover;
     @SerializedName("name")
     @Expose
-    private java.lang.String name;
+    private String name;
     private Integer tracks;
     private Integer albums;
-    private List<java.lang.String> genres;
-    private java.lang.String link;
+    private List<String> genres;
+    private String link;
     @SerializedName("description")
-    private java.lang.String description;
+    private String description;
 
     public Integer getId() {
         return id;
@@ -29,11 +29,11 @@ public class SingerEntity {
         this.id = id;
     }
 
-    java.lang.String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(java.lang.String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -53,14 +53,13 @@ public class SingerEntity {
         this.albums = albums;
     }
 
-    public List<java.lang.String> getGenres() {
+    public List<String> getGenres() {
         return genres;
     }
-//
-    public void setGenres(List<java.lang.String> genres) {
+
+    public void setGenres(List<String> genres) {
         this.genres = genres;
     }
-//
 
     public Cover getCover() {
         return cover;
@@ -69,20 +68,20 @@ public class SingerEntity {
     public void setCover(Cover cover) {
         this.cover = cover;
     }
-//
-    public java.lang.String getLink() {
+
+    public String getLink() {
         return link;
     }
 
-    public void setLink(java.lang.String link) {
+    public void setLink(String link) {
         this.link = link;
     }
-//
-    public java.lang.String getDescription() {
+
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(java.lang.String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }
