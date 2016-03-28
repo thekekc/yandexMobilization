@@ -48,7 +48,12 @@ public class SingerListAdapter extends BaseAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
         viewHolder.name.setText(singers.get(i).getName());
         viewHolder.genres.setText(getGenres(singers.get(i).getGenres()));
-        viewHolder.amounts.setText(singers.get(i).getAlbums() + "," + singers.get(i).getTracks());
+        String albumsString = context.getResources().getQuantityString(R.plurals.albums,
+                singers.get(i).getAlbums(),singers.get(i).getAlbums());
+        String tracksString = context.getResources().getQuantityString(R.plurals.tracks,
+                singers.get(i).getTracks(),singers.get(i).getTracks());
+
+        viewHolder.amounts.setText(albumsString +", " + tracksString);
         Picasso.with(context).load(singers.get(i).getCover().getSmall()).into(viewHolder.coverSmall);
         return view;
     }

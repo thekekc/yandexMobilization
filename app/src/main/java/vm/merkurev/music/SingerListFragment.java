@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import vm.merkurev.music.dummy.DummyContent;
 import vm.merkurev.music.model.ModelListener;
@@ -84,7 +85,8 @@ public class SingerListFragment extends ListFragment {
 
             @Override
             public void onError() {
-                Log.d("error", "error");
+                Log.d("error", getActivity().getResources().getString(R.string.no_connection_error));
+                Toast.makeText(getActivity(), R.string.no_connection_error, Toast.LENGTH_SHORT).show();
             }
         });
         singersModel.updateSingers();
