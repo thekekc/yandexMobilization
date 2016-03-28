@@ -14,7 +14,7 @@ import vm.merkurev.music.rest.MusicSerivce;
  * Created by merkurev on 25.03.16.
  */
 public class SingersModel extends Model {
-    private List<SingerEntity> singers = new ArrayList<>();
+    private final List<SingerEntity> singers = new ArrayList<>();
     private final Retrofit retrofit;
     private MusicSerivce musicSerivce;
     private ICache<List<SingerEntity>> singersCache;
@@ -37,7 +37,8 @@ public class SingersModel extends Model {
         musicSerivce.listSingers().enqueue(new Callback<List<SingerEntity>>() {
             @Override
             public void onResponse(Call<List<SingerEntity>> call, Response<List<SingerEntity>> response) {
-                singers = response.body();
+                singers.clear();
+                singers.addAll(response.body());
                 notifyListeners();
             }
 

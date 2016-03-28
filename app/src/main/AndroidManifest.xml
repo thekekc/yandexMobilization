@@ -9,7 +9,7 @@
         android:theme="@style/CustomActionBarTheme" >
         <activity
             android:name=".SingerListActivity"
-            android:label="@string/app_name" >
+            android:label="@string/singers" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

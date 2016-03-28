@@ -3,11 +3,15 @@ package vm.merkurev.music;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import vm.merkurev.music.dummy.DummyContent;
+import vm.merkurev.music.model.ModelListener;
+import vm.merkurev.music.model.SingersModel;
+import vm.merkurev.music.view.SingerListAdapter;
 
 /**
  * A list fragment representing a list of Singerss. This fragment
@@ -68,20 +72,29 @@ public class SingerListFragment extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);cltk
+        SingersModel singersModel = new SingersModel(null);
+        singersModel.addListener(new ModelListener() {
+            @Override
+            public void onUpdate() {
+                SingerListAdapter adapter = (SingerListAdapter) getListAdapter();
+                adapter.notifyDataSetChanged();
+                Log.d("update", "updated");
+            }
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+            @Override
+            public void onError() {
+                Log.d("error", "error");
+            }
+        });
+        singersModel.updateSingers();
+        setListAdapter(new SingerListAdapter(singersModel.getSingers(),this.getActivity(), R.layout.singer_list_item));
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {

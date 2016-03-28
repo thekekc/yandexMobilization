@@ -53,21 +53,6 @@ public class SingerListActivity extends FragmentActivity
                     .setActivateOnItemClick(true);
         }
 
-        SingersModel singersModel = new SingersModel(null);
-        singersModel.addListener(new ModelListener() {
-            @Override
-            public void onUpdate() {
-                Log.d("update", "updated");
-            }
-
-            @Override
-            public void onError() {
-                Log.d("error", "error");
-            }
-        });
-        singersModel.updateSingers();
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**

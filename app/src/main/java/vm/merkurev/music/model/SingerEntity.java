@@ -1,8 +1,4 @@
 package vm.merkurev.music.model;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -11,14 +7,11 @@ import java.util.List;
 public class SingerEntity {
     private Integer id;
     private Cover cover;
-    @SerializedName("name")
-    @Expose
     private String name;
     private Integer tracks;
     private Integer albums;
     private List<String> genres;
     private String link;
-    @SerializedName("description")
     private String description;
 
     public Integer getId() {
@@ -29,7 +22,7 @@ public class SingerEntity {
         this.id = id;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
