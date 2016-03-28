@@ -72,7 +72,7 @@ public class SingerListFragment extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);cltk
+        super.onCreate(savedInstanceState);
         SingersModel singersModel = new SingersModel(null);
         singersModel.addListener(new ModelListener() {
             @Override
