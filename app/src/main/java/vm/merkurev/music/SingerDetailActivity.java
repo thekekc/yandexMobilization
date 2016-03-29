@@ -38,12 +38,12 @@ public class SingerDetailActivity extends AppCompatActivity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
+        SingerEntity singer  = (SingerEntity) getIntent().getSerializableExtra(SingerDetailFragment.ARG_ITEM_ID);
+        getSupportActionBar().setTitle(singer.getName());
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            SingerEntity singer  = (SingerEntity) getIntent().getSerializableExtra(SingerDetailFragment.ARG_ITEM_ID);
-            getSupportActionBar().setTitle(singer.getName());
             arguments.putSerializable(SingerDetailFragment.ARG_ITEM_ID, singer);
             SingerDetailFragment fragment = new SingerDetailFragment();
             fragment.setArguments(arguments);

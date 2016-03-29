@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">music</string>
     <string name="title_singer_detail">Singer Detail</string>
-    <string name="singers">Испольнители</string>
+    <string name="singers">Исполнители</string>
     <string name="no_connection_error">Нет интернета, исполнители не загрузятся</string>
 </resources>
