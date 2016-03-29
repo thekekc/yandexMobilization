@@ -1,9 +1,11 @@
 package vm.merkurev.music.model;
 
+import java.io.Serializable;
+
 /**
  * Created by merkurev on 26.03.16.
  */
-public class Cover {
+public class Cover implements Serializable {
     String small;
     String big;
 

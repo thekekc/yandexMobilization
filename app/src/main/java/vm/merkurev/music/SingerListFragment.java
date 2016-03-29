@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import vm.merkurev.music.dummy.DummyContent;
 import vm.merkurev.music.model.ModelListener;
+import vm.merkurev.music.model.SingerEntity;
 import vm.merkurev.music.model.SingersModel;
 import vm.merkurev.music.view.SingerListAdapter;
 
@@ -25,6 +26,7 @@ import vm.merkurev.music.view.SingerListAdapter;
  */
 public class SingerListFragment extends ListFragment {
 
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -36,6 +38,7 @@ public class SingerListFragment extends ListFragment {
      * clicks.
      */
     private Callbacks mCallbacks = sDummyCallbacks;
+    private SingersModel singersModel = new SingersModel(null);
 
     /**
      * The current activated item position. Only used on tablets.
@@ -51,7 +54,7 @@ public class SingerListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        public void onItemSelected(SingerEntity entity);
     }
 
     /**
@@ -60,7 +63,7 @@ public class SingerListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(SingerEntity entity) {
         }
     };
 
@@ -74,7 +77,6 @@ public class SingerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SingersModel singersModel = new SingersModel(null);
         singersModel.addListener(new ModelListener() {
             @Override
             public void onUpdate() {
@@ -130,7 +132,7 @@ public class SingerListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(singersModel.getSingers().get(position));
     }
 
     @Override

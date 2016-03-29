@@ -6,11 +6,12 @@
         <item name="background">@color/yandex_purple</item>
     </style>
     <style name="CustomActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarStyle"   tools:ignore="NewApi">@style/PurpleActionBar</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
+        <item name="android:actionBarStyle"  tools:ignore="NewApi">@style/PurpleActionBar</item>
         <item name="actionBarStyle">@style/PurpleActionBar</item>
 
-        <item name="android:colorPrimary" tools:ignore="NewApi">@color/yandex_purple</item>
-        <item name="android:colorPrimaryDark" tools:ignore="NewApi">@color/yandex_purple_darker</item>
+        <item name="colorPrimary">@color/yandex_purple</item>
+        <item name="colorPrimaryDark">@color/yandex_purple_darker</item>
 
     </style>
 </resources>

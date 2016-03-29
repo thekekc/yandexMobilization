@@ -1,10 +1,11 @@
 package vm.merkurev.music.model;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by merkurev on 24.03.16.
  */
-public class SingerEntity {
+public class SingerEntity implements Serializable {
     private Integer id;
     private Cover cover;
     private String name;

@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import android.view.MenuItem;
 
+import vm.merkurev.music.model.SingerEntity;
+
 /**
  * An activity representing a single Singer detail screen. This
  * activity is only used on handset devices. On tablet-size devices,
@@ -40,8 +42,9 @@ public class SingerDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(SingerDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(SingerDetailFragment.ARG_ITEM_ID));
+            SingerEntity singer  = (SingerEntity) getIntent().getSerializableExtra(SingerDetailFragment.ARG_ITEM_ID);
+            getSupportActionBar().setTitle(singer.getName());
+            arguments.putSerializable(SingerDetailFragment.ARG_ITEM_ID, singer);
             SingerDetailFragment fragment = new SingerDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
