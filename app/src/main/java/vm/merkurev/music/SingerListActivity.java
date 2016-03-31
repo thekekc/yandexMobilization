@@ -1,14 +1,21 @@
 package vm.merkurev.music;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.util.Log;
+import android.view.View;
 
 import vm.merkurev.music.model.ModelListener;
 import vm.merkurev.music.model.SingerEntity;
 import vm.merkurev.music.model.SingersModel;
+import vm.merkurev.music.view.DetailsTransition;
 
 
 /**
@@ -62,13 +69,12 @@ public class SingerListActivity extends AppCompatActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(SingerEntity entity) {
+    public void onItemSelected(SingerEntity entity, View view) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-//            arguments.putString(SingerDetailFragment.ARG_ITEM_ID, id);
             arguments.putSerializable(SingerDetailFragment.ARG_ITEM_ID, entity);
             SingerDetailFragment fragment = new SingerDetailFragment();
             fragment.setArguments(arguments);
@@ -76,12 +82,16 @@ public class SingerListActivity extends AppCompatActivity
                     .replace(R.id.singer_detail_container, fragment)
                     .commit();
 
+
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this, view.findViewById(R.id.coverSmall), "cover");
             Intent detailIntent = new Intent(this, SingerDetailActivity.class);
             detailIntent.putExtra(SingerDetailFragment.ARG_ITEM_ID, entity);
-            startActivity(detailIntent);
+            ActivityCompat.startActivity(this, detailIntent, options.toBundle());
+//            startActivity(detailIntent);
         }
     }
 }

@@ -80,6 +80,7 @@ public class SingerDetailFragment extends Fragment {
             if (genres != null) {
                 genres.setText(getGenres(mItem.getGenres()));
             }
+
         }
 
         return rootView;

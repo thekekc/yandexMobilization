@@ -15,7 +15,8 @@
             android:id="@+id/coverBig"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:transitionName="cover"/>
 
         <TextView
             android:id="@+id/genres_details"
