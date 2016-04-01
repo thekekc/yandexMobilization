@@ -1,14 +1,27 @@
 package vm.merkurev.music;
 
+import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.SharedElementCallback;
+import android.support.v4.view.WindowCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -33,6 +46,8 @@ public class SingerDetailFragment extends Fragment {
      */
     private SingerEntity mItem;
 
+    private ImageView bigCover;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -50,6 +65,46 @@ public class SingerDetailFragment extends Fragment {
             // to load content from a content provider.
             mItem = (SingerEntity) getArguments().getSerializable(ARG_ITEM_ID);
         }
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            FragmentActivity activityCompat = getActivity();
+            if (activityCompat.getWindow().getSharedElementEnterTransition()!=null) {
+                activityCompat.getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                    @Override
+                    public void onTransitionStart(Transition transition) {
+
+                    }
+
+                    @Override
+                    public void onTransitionEnd(Transition transition) {
+                        if (bigCover != null) {
+                            Picasso.with(getActivity())
+                                    .load(mItem.getCover().getBig())
+                                    .noFade()
+                                    .noPlaceholder()
+                                    .into(bigCover);
+                        }
+
+                    }
+
+                    @Override
+                    public void onTransitionCancel(Transition transition) {
+
+                    }
+
+                    @Override
+                    public void onTransitionPause(Transition transition) {
+
+                    }
+
+                    @Override
+                    public void onTransitionResume(Transition transition) {
+
+                    }
+                });
+            }
+        }
+
     }
 
     @Override
@@ -62,9 +117,13 @@ public class SingerDetailFragment extends Fragment {
                 desc.setText(mItem.getDescription());
             }
 
-            ImageView bigCover = (ImageView) rootView.findViewById(R.id.coverBig);
+            bigCover = (ImageView) rootView.findViewById(R.id.coverBig);
             if (bigCover != null) {
-                Picasso.with(getActivity()).load(mItem.getCover().getBig()).into(bigCover);
+                if(Build.VERSION.SDK_INT>=21){
+                    Picasso.with(getActivity()).load(mItem.getCover().getSmall()).into(bigCover);
+                }else {
+                    Picasso.with(getActivity()).load(mItem.getCover().getBig()).into(bigCover);
+                }
             }
 
             String albumsString = getActivity().getResources().getQuantityString(R.plurals.albums,

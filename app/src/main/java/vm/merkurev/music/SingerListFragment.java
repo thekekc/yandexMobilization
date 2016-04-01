@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import vm.merkurev.music.dummy.DummyContent;
 import vm.merkurev.music.model.ModelListener;
 import vm.merkurev.music.model.SingerEntity;
