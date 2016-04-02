@@ -12,10 +12,10 @@
     -->
 
     <fragment android:id="@+id/singer_list" android:name="vm.merkurev.music.SingerListFragment"
-        android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+        android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="7"
         tools:layout="@android:layout/list_content" />
 
     <FrameLayout android:id="@+id/singer_detail_container" android:layout_width="0dp"
-        android:layout_height="match_parent" android:layout_weight="3" />
+        android:layout_height="match_parent" android:layout_weight="7" />
 
 </LinearLayout>
