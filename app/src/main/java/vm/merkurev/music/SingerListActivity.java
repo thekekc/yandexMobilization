@@ -1,21 +1,17 @@
 package vm.merkurev.music;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.util.Log;
 import android.view.View;
 
-import vm.merkurev.music.model.ModelListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import vm.merkurev.music.model.SingerEntity;
-import vm.merkurev.music.model.SingersModel;
-import vm.merkurev.music.view.DetailsTransition;
 
 
 /**
@@ -61,7 +57,18 @@ public class SingerListActivity extends AppCompatActivity
                     .findFragmentById(R.id.singer_list))
                     .setActivateOnItemClick(true);
         }
+        try {
+            StringBuilder buf=new StringBuilder();
+            InputStreamReader inputStream = new InputStreamReader(getAssets().open(""));
+            BufferedReader bufferedReader = new BufferedReader(inputStream);
+            String str;
+            while ((str=bufferedReader.readLine()) != null) {
+                buf.append(str);
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
