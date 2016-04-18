@@ -16,6 +16,8 @@ import vm.merkurev.music.model.NetworkSingerModel;
 import vm.merkurev.music.model.Singer;
 import vm.merkurev.music.model.cache.FileCache;
 import vm.merkurev.music.model.cache.ICache;
+import vm.merkurev.music.presenter.IListViewPresenter;
+import vm.merkurev.music.presenter.ListViewPresenter;
 import vm.merkurev.music.view.IListView;
 import vm.merkurev.music.view.SingerListAdapter;
 
@@ -30,6 +32,8 @@ import vm.merkurev.music.view.SingerListAdapter;
  */
 public class SingerListFragment extends ListFragment implements IListView {
 
+
+    private IListViewPresenter presenter;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -69,22 +73,6 @@ public class SingerListFragment extends ListFragment implements IListView {
         }
     };
 
-    private ModelListener modelListener = new ModelListener() {
-        @Override
-        public void onUpdate() {
-            SingerListAdapter adapter = (SingerListAdapter) getListAdapter();
-            adapter.notifyDataSetChanged();
-            setSelection(mActivatedPosition);
-            Log.d("update", "updated");
-        }
-
-        @Override
-        public void onError() {
-            Log.d("error", getActivity().getResources().getString(R.string.no_connection_error));
-            Toast.makeText(getActivity(), R.string.no_connection_error, Toast.LENGTH_SHORT).show();
-        }
-    };
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -95,6 +83,8 @@ public class SingerListFragment extends ListFragment implements IListView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new ListViewPresenter(this, getActivity());
+        setListAdapter(new SingerListAdapter(presenter.getSingers(),this.getActivity(), R.layout.singer_list_item));
     }
 
     @Override
@@ -105,11 +95,7 @@ public class SingerListFragment extends ListFragment implements IListView {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
-
-        final AppContainer appContainer = (AppContainer) getActivity().getApplication();
-        appContainer.getNetworkSingerModel().addListener(modelListener);
-        setListAdapter(new SingerListAdapter(appContainer.getNetworkSingerModel().getDataList(),this.getActivity(), R.layout.singer_list_item));
-        appContainer.getNetworkSingerModel().updateSingers();
+        presenter.onCreate();
     }
 
     @Override
@@ -129,9 +115,7 @@ public class SingerListFragment extends ListFragment implements IListView {
         super.onDetach();
         // Reset the active callbacks interface to the dummy implementation.
         mCallbacks = sDummyCallbacks;
-
-        final AppContainer appContainer = (AppContainer) getActivity().getApplication();
-        appContainer.getNetworkSingerModel().removeListener(modelListener);
+        presenter.onDestroy();
     }
 
     @Override
@@ -158,7 +142,8 @@ public class SingerListFragment extends ListFragment implements IListView {
 
     @Override
     public void setViewList(List<Singer> singers) {
-
+        SingerListAdapter singerListAdapter = (SingerListAdapter) getListAdapter();
+        singerListAdapter.notifyDataSetChanged();
     }
 
     @Override

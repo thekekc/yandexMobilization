@@ -17,7 +17,7 @@ import vm.merkurev.music.model.cache.ICache;
 
 @RunWith(AndroidJUnit4.class)
 public class CacheTest extends ActivityInstrumentationTestCase2 {
-    private ICache<List<Singer>> cache;
+    private ICache cache;
     private Context context;
     private List<Singer> singersPut = new ArrayList<>();
 

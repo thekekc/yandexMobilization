@@ -72,5 +72,8 @@ public class ListViewPresenter implements IListViewPresenter {
 
     }
 
-
+    @Override
+    public List<Singer> getSingers() {
+        return singers;
+    }
 }
