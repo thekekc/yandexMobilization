@@ -124,11 +124,10 @@ public class SingerListFragment extends ListFragment implements IListView {
 
         getListView().setItemChecked(position, true);
         mActivatedPosition = position;
-
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        final AppContainer appContainer = (AppContainer) getActivity().getApplication();
-        mCallbacks.onItemSelected(appContainer.getNetworkSingerModel().getDataList().get(position), view);
+        presenter.itemSelected(position);
+        mCallbacks.onItemSelected(presenter.getSingers().get(position), view);
     }
 
     @Override
@@ -144,11 +143,12 @@ public class SingerListFragment extends ListFragment implements IListView {
     public void setViewList(List<Singer> singers) {
         SingerListAdapter singerListAdapter = (SingerListAdapter) getListAdapter();
         singerListAdapter.notifyDataSetChanged();
+        singerListAdapter.getCount();
     }
 
     @Override
     public void showError(String message) {
-
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**

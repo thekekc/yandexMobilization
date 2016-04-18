@@ -20,7 +20,7 @@ import vm.merkurev.music.view.IListView;
  */
 public class ListViewPresenter implements IListViewPresenter {
     private IListView listView;
-    private List<Singer> singers = new ArrayList<>();
+    private final List<Singer> singers = new ArrayList<>();
     private boolean isAttached = false;
     private NetworkSingerModel networkSingerModel;
     private ICache fileCache;
@@ -29,7 +29,8 @@ public class ListViewPresenter implements IListViewPresenter {
     private ModelListener modelListener = new ModelListener() {
         @Override
         public void onUpdate() {
-            singers  = networkSingerModel.getDataList();
+            singers.clear();
+            singers.addAll(networkSingerModel.getDataList());
             fileCache.putInCache(singers);
             if (isAttached) listView.setViewList(singers);
         }
@@ -52,11 +53,12 @@ public class ListViewPresenter implements IListViewPresenter {
         networkSingerModel.addListener(modelListener);
         //if we have singers from network don't update them
         //until app restart
+        singers.clear();
         if(networkSingerModel.getDataList().size()>0){
-            singers = networkSingerModel.getDataList();
+            singers.addAll(networkSingerModel.getDataList());
         } else {
             networkSingerModel.updateSingers();
-            singers = fileCache.getFromCache();
+            singers.addAll(fileCache.getFromCache());
         }
         listView.setViewList(singers);
     }
