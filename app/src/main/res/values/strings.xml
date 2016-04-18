@@ -3,4 +3,5 @@
     <string name="title_singer_detail">Singer Detail</string>
     <string name="singers">Исполнители</string>
     <string name="no_connection_error">Нет интернета, исполнители не загрузятся</string>
+    <string name="NETWORK_ERROR">Не удалось подключится к сети</string>
 </resources>

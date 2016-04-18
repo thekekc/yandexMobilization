@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by merkurev on 24.03.16.
  */
-public class SingerEntity implements Serializable {
+public class Singer implements Serializable {
     private Integer id;
     private Cover cover;
     private String name;

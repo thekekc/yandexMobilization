@@ -10,15 +10,15 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import vm.merkurev.music.R;
-import vm.merkurev.music.model.SingerEntity;
+import vm.merkurev.music.model.Singer;
 
 
 public class SingerListAdapter extends BaseAdapter {
-    private List<SingerEntity> singers;
+    private List<Singer> singers;
     private Context context;
     private int itemLayout;
 
-    public SingerListAdapter(@NonNull List<SingerEntity> singers, @NonNull Context context, int itemLayout) {
+    public SingerListAdapter(@NonNull List<Singer> singers, @NonNull Context context, int itemLayout) {
         this.singers = singers;
         this.context = context;
         this.itemLayout = itemLayout;
@@ -54,6 +54,7 @@ public class SingerListAdapter extends BaseAdapter {
                 singers.get(i).getTracks(),singers.get(i).getTracks());
 
         viewHolder.amounts.setText(albumsString +", " + tracksString);
+        Picasso.with(context).setIndicatorsEnabled(true);
         Picasso.with(context).load(singers.get(i).getCover().getSmall()).into(viewHolder.coverSmall);
         return view;
     }

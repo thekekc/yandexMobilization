@@ -3,7 +3,6 @@ package vm.merkurev.music;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
-import android.media.Ringtone;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
@@ -13,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.logging.Handler;
 
 /**
  * Created by merkurev on 02.04.16.

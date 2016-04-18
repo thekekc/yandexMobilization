@@ -11,7 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import vm.merkurev.music.model.SingerEntity;
+import vm.merkurev.music.model.Singer;
 
 
 /**
@@ -57,18 +57,6 @@ public class SingerListActivity extends AppCompatActivity
                     .findFragmentById(R.id.singer_list))
                     .setActivateOnItemClick(true);
         }
-        try {
-            StringBuilder buf=new StringBuilder();
-            InputStreamReader inputStream = new InputStreamReader(getAssets().open(""));
-            BufferedReader bufferedReader = new BufferedReader(inputStream);
-            String str;
-            while ((str=bufferedReader.readLine()) != null) {
-                buf.append(str);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -76,7 +64,7 @@ public class SingerListActivity extends AppCompatActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(SingerEntity entity, View view) {
+    public void onItemSelected(Singer entity, View view) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a

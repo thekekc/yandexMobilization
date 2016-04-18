@@ -1,32 +1,21 @@
 package vm.merkurev.music;
 
-import android.annotation.TargetApi;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.SharedElementCallback;
-import android.support.v4.view.WindowCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.List;
 
-import vm.merkurev.music.dummy.DummyContent;
-import vm.merkurev.music.model.SingerEntity;
+import vm.merkurev.music.model.Singer;
 
 /**
  * A fragment representing a single Singer detail screen.
@@ -44,7 +33,7 @@ public class SingerDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private SingerEntity mItem;
+    private Singer mItem;
 
     private ImageView bigCover;
 
@@ -63,7 +52,7 @@ public class SingerDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = (SingerEntity) getArguments().getSerializable(ARG_ITEM_ID);
+            mItem = (Singer) getArguments().getSerializable(ARG_ITEM_ID);
         }
 
         if (Build.VERSION.SDK_INT >= 21) {

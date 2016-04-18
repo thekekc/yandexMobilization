@@ -1,13 +1,12 @@
 package vm.merkurev.music;
 
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.MenuItem;
 
-import vm.merkurev.music.model.SingerEntity;
+import vm.merkurev.music.model.Singer;
 
 /**
  * An activity representing a single Singer detail screen. This
@@ -38,7 +37,7 @@ public class SingerDetailActivity extends AppCompatActivity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
-        SingerEntity singer  = (SingerEntity) getIntent().getSerializableExtra(SingerDetailFragment.ARG_ITEM_ID);
+        Singer singer  = (Singer) getIntent().getSerializableExtra(SingerDetailFragment.ARG_ITEM_ID);
         getSupportActionBar().setTitle(singer.getName());
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity

@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import java.util.List;
 
-import vm.merkurev.music.dummy.DummyContent;
+import vm.merkurev.music.appContainer.AppContainer;
 import vm.merkurev.music.model.ModelListener;
-import vm.merkurev.music.model.SingerEntity;
-import vm.merkurev.music.model.SingersModel;
+import vm.merkurev.music.model.NetworkSingerModel;
+import vm.merkurev.music.model.Singer;
+import vm.merkurev.music.model.cache.FileCache;
+import vm.merkurev.music.model.cache.ICache;
+import vm.merkurev.music.view.IListView;
 import vm.merkurev.music.view.SingerListAdapter;
 
 /**
@@ -26,7 +28,7 @@ import vm.merkurev.music.view.SingerListAdapter;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class SingerListFragment extends ListFragment {
+public class SingerListFragment extends ListFragment implements IListView {
 
 
     /**
@@ -40,8 +42,6 @@ public class SingerListFragment extends ListFragment {
      * clicks.
      */
     private Callbacks mCallbacks = sDummyCallbacks;
-    private SingersModel singersModel = new SingersModel(null);
-
     /**
      * The current activated item position. Only used on tablets.
      */
@@ -56,7 +56,7 @@ public class SingerListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(SingerEntity entity, View holder);
+        public void onItemSelected(Singer entity, View holder);
     }
 
     /**
@@ -65,7 +65,23 @@ public class SingerListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(SingerEntity entity, View holder) {
+        public void onItemSelected(Singer entity, View holder) {
+        }
+    };
+
+    private ModelListener modelListener = new ModelListener() {
+        @Override
+        public void onUpdate() {
+            SingerListAdapter adapter = (SingerListAdapter) getListAdapter();
+            adapter.notifyDataSetChanged();
+            setSelection(mActivatedPosition);
+            Log.d("update", "updated");
+        }
+
+        @Override
+        public void onError() {
+            Log.d("error", getActivity().getResources().getString(R.string.no_connection_error));
+            Toast.makeText(getActivity(), R.string.no_connection_error, Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -79,23 +95,6 @@ public class SingerListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        singersModel.addListener(new ModelListener() {
-            @Override
-            public void onUpdate() {
-                SingerListAdapter adapter = (SingerListAdapter) getListAdapter();
-                adapter.notifyDataSetChanged();
-                Log.d("update", "updated");
-            }
-
-            @Override
-            public void onError() {
-                Log.d("error", getActivity().getResources().getString(R.string.no_connection_error));
-                Toast.makeText(getActivity(), R.string.no_connection_error, Toast.LENGTH_SHORT).show();
-            }
-        });
-        singersModel.updateSingers();
-        setListAdapter(new SingerListAdapter(singersModel.getSingers(),this.getActivity(), R.layout.singer_list_item));
-
     }
 
     @Override
@@ -106,6 +105,11 @@ public class SingerListFragment extends ListFragment {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
+
+        final AppContainer appContainer = (AppContainer) getActivity().getApplication();
+        appContainer.getNetworkSingerModel().addListener(modelListener);
+        setListAdapter(new SingerListAdapter(appContainer.getNetworkSingerModel().getDataList(),this.getActivity(), R.layout.singer_list_item));
+        appContainer.getNetworkSingerModel().updateSingers();
     }
 
     @Override
@@ -123,9 +127,11 @@ public class SingerListFragment extends ListFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
         // Reset the active callbacks interface to the dummy implementation.
         mCallbacks = sDummyCallbacks;
+
+        final AppContainer appContainer = (AppContainer) getActivity().getApplication();
+        appContainer.getNetworkSingerModel().removeListener(modelListener);
     }
 
     @Override
@@ -137,7 +143,8 @@ public class SingerListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(singersModel.getSingers().get(position), view);
+        final AppContainer appContainer = (AppContainer) getActivity().getApplication();
+        mCallbacks.onItemSelected(appContainer.getNetworkSingerModel().getDataList().get(position), view);
     }
 
     @Override
@@ -147,6 +154,16 @@ public class SingerListFragment extends ListFragment {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
+    }
+
+    @Override
+    public void setViewList(List<Singer> singers) {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
     }
 
     /**
