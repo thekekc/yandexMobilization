@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
+    <LinearLayout
+        android:id="@+id/detailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="8">
+
+        <ImageView
+            android:id="@+id/coverBig"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:transitionName="cover"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Егор Крид"
+            android:id="@+id/name"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:id="@+id/genres_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="dance, electronics"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/amount_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="5 альбомов. 44 песни"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Биография"
+            android:id="@+id/bio"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Odesza (stylized as ODESZA) are an American electronic music duo from Seattle consisting of Harrison Mills (CatacombKid) and Clayton Knight (BeachesBeaches). The group was formed in 2012 shortly before Mills and Knight graduated from Western Washington University.[5] Their debut album, Summer&apos;s Gone, was released in 2012 to much acclaim in the underground electronic music community.[6][7] Odesza followed Summer&apos;s Gone with their first EP, My Friends Never Die, in 2013 and their second LP, In Return, in 2014. The duo released In Return (Deluxe Edition) on September 18, 2015 via Counter Records, an extended version of the original album plus three live recordings all featuring a horn section, instrumentals, and a new track “Light (feat. Little Dragon)”.[8] On December 7th, 2015, ODESZA’s “Say My Name (RAC Remix)” was nominated for the Best Remixed Recording Grammy.[9]"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/primary_material_dark" />
+
+    </LinearLayout>
+</ScrollView>

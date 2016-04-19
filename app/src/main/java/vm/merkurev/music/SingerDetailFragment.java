@@ -33,7 +33,7 @@ public class SingerDetailFragment extends Fragment {
      */
     public static final String ARG_ITEM_ID = "item_id";
 
-    private Singer mItem;
+    private Singer singer;
 
     private ImageView bigCover;
 
@@ -49,7 +49,7 @@ public class SingerDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItem = (Singer) getArguments().getSerializable(ARG_ITEM_ID);
+            singer = (Singer) getArguments().getSerializable(ARG_ITEM_ID);
         }
 
         //new transition animation
@@ -67,7 +67,7 @@ public class SingerDetailFragment extends Fragment {
                         //onransition end load big picture, before use small one
                         if (bigCover != null) {
                             Picasso.with(getActivity())
-                                    .load(mItem.getCover().getBig())
+                                    .load(singer.getCover().getBig())
                                     .noFade()
                                     .noPlaceholder()
                                     .into(bigCover);
@@ -100,27 +100,31 @@ public class SingerDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         //setting view fields
         View rootView = inflater.inflate(R.layout.fragment_singer_detail, container, false);
-        if (mItem != null) {
+        if (singer != null) {
             TextView desc = (TextView) rootView.findViewById(R.id.description);
             if (desc != null) {
-                desc.setText(mItem.getDescription());
+                desc.setText(singer.getDescription());
             }
 
+            TextView name = (TextView) rootView.findViewById(R.id.name);
+            if(name!=null){
+                name.setText(singer.getName());
+            }
             bigCover = (ImageView) rootView.findViewById(R.id.coverBig);
             //load big picture from very beginning if animation is not implemented(SDK<21)
             if (bigCover != null) {
                 if (Build.VERSION.SDK_INT >= 21) {
-                    Picasso.with(getActivity()).load(mItem.getCover().getSmall()).into(bigCover);
+                    Picasso.with(getActivity()).load(singer.getCover().getSmall()).into(bigCover);
                 } else {
-                    Picasso.with(getActivity()).load(mItem.getCover().getBig()).into(bigCover);
+                    Picasso.with(getActivity()).load(singer.getCover().getBig()).into(bigCover);
                 }
             }
 
             //string plurals
             String albumsString = getActivity().getResources().getQuantityString(R.plurals.albums,
-                    mItem.getAlbums(), mItem.getAlbums());
+                    singer.getAlbums(), singer.getAlbums());
             String tracksString = getActivity().getResources().getQuantityString(R.plurals.tracks,
-                    mItem.getTracks(), mItem.getTracks());
+                    singer.getTracks(), singer.getTracks());
             TextView amounts = (TextView) rootView.findViewById(R.id.amount_details);
             if (amounts != null) {
                 amounts.setText(albumsString + ", " + tracksString);
@@ -128,7 +132,7 @@ public class SingerDetailFragment extends Fragment {
 
             TextView genres = (TextView) rootView.findViewById(R.id.genres_details);
             if (genres != null) {
-                genres.setText(getGenres(mItem.getGenres()));
+                genres.setText(getGenres(singer.getGenres()));
             }
 
         }
