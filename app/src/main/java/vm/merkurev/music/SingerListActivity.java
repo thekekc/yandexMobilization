@@ -86,7 +86,6 @@ public class SingerListActivity extends AppCompatActivity
             Intent detailIntent = new Intent(this, SingerDetailActivity.class);
             detailIntent.putExtra(SingerDetailFragment.ARG_ITEM_ID, entity);
             ActivityCompat.startActivity(this, detailIntent, options.toBundle());
-//            startActivity(detailIntent);
         }
     }
 }

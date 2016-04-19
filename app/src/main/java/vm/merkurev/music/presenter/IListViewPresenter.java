@@ -1,5 +1,7 @@
 package vm.merkurev.music.presenter;
 
+import android.view.View;
+
 import java.util.List;
 import vm.merkurev.music.model.Singer;
 
@@ -9,6 +11,7 @@ import vm.merkurev.music.model.Singer;
 public interface IListViewPresenter {
     void onCreate();
     void onDestroy();
-    void itemSelected(int itemId);
+    void onResume();
+    void itemSelected(int position, View view);
     List<Singer> getSingers();
 }

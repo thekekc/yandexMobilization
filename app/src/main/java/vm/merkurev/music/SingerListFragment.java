@@ -2,9 +2,12 @@ package vm.merkurev.music;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -60,7 +63,7 @@ public class SingerListFragment extends ListFragment implements IListView {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(Singer entity, View holder);
+         void onItemSelected(Singer entity, View holder);
     }
 
     /**
@@ -90,23 +93,34 @@ public class SingerListFragment extends ListFragment implements IListView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Restore the previously serialized activated item position.
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-        }
+        setEmptyText(getActivity().getString(R.string.empty));
         presenter.onCreate();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //presenter.onResume();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+       presenter.onDestroy();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
-
         mCallbacks = (Callbacks) activity;
     }
 
@@ -115,40 +129,60 @@ public class SingerListFragment extends ListFragment implements IListView {
         super.onDetach();
         // Reset the active callbacks interface to the dummy implementation.
         mCallbacks = sDummyCallbacks;
-        presenter.onDestroy();
+//        presenter.onDestroy();
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
         getListView().setItemChecked(position, true);
         mActivatedPosition = position;
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        presenter.itemSelected(position);
-        mCallbacks.onItemSelected(presenter.getSingers().get(position), view);
+        presenter.itemSelected(position, view);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mActivatedPosition != ListView.INVALID_POSITION) {
-            // Serialize and persist the activated item position.
-            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
-        }
-    }
 
     @Override
-    public void setViewList(List<Singer> singers) {
+    public void updateList() {
         SingerListAdapter singerListAdapter = (SingerListAdapter) getListAdapter();
         singerListAdapter.notifyDataSetChanged();
-        singerListAdapter.getCount();
     }
 
     @Override
     public void showError(String message) {
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDetails(int position, View view) {
+        // Notify the active callbacks interface (the activity, if the
+        // fragment is attached to one) that an item has been selected.
+        mCallbacks.onItemSelected(presenter.getSingers().get(position), view);
+    }
+
+    @Override
+    public void setActiveItem(int position) {
+        getListView().setItemChecked(position, true);
+    }
+
+    @Override
+    public int getFirstVisible() {
+        return getListView().getFirstVisiblePosition();
+    }
+
+    @Override
+    public int getPadding() {
+        View v = getListView().getChildAt(0);
+        return (v == null) ? 0 : (v.getTop() - getListView().getPaddingTop());
+    }
+
+    @Override
+    public void scrollToPosition(final int position, final int padding) {
+        getListView().post(new Runnable() {
+            @Override
+            public void run() {
+                getListView().setSelectionFromTop(position, padding);
+            }
+        });
     }
 
     /**
@@ -163,13 +197,4 @@ public class SingerListFragment extends ListFragment implements IListView {
                 : ListView.CHOICE_MODE_NONE);
     }
 
-    private void setActivatedPosition(int position) {
-        if (position == ListView.INVALID_POSITION) {
-            getListView().setItemChecked(mActivatedPosition, false);
-        } else {
-            getListView().setItemChecked(position, true);
-        }
-
-        mActivatedPosition = position;
-    }
 }

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">music</string>
+    <string name="loading">Загрузка списка</string>
     <string name="title_singer_detail">Singer Detail</string>
     <string name="singers">Исполнители</string>
     <string name="no_connection_error">Нет интернета, исполнители не загрузятся</string>
     <string name="NETWORK_ERROR">Не удалось подключится к сети</string>
+    <string name="empty">Нет данных</string>
 </resources>

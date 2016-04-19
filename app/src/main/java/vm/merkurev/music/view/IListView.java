@@ -1,13 +1,20 @@
 package vm.merkurev.music.view;
 
+import android.view.View;
+
 import java.util.List;
 
 import vm.merkurev.music.model.Singer;
 
 /**
- * Created by merkurev on 24.03.16.
+ *
  */
 public interface IListView  {
-    void setViewList(List<Singer> singers);
+    void updateList();
     void showError(String message);
+    void showDetails(int position, View view);
+    void setActiveItem(int position);
+    void scrollToPosition(int position, int padding);
+    int getFirstVisible();
+    int getPadding();
 }

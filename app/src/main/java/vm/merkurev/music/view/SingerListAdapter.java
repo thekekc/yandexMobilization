@@ -54,7 +54,6 @@ public class SingerListAdapter extends BaseAdapter {
                 singers.get(i).getTracks(),singers.get(i).getTracks());
 
         viewHolder.amounts.setText(albumsString +", " + tracksString);
-        Picasso.with(context).setIndicatorsEnabled(true);
         Picasso.with(context).load(singers.get(i).getCover().getSmall()).into(viewHolder.coverSmall);
         return view;
     }
