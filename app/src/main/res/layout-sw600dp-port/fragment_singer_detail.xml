@@ -20,15 +20,6 @@
             android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Егор Крид"
-            android:id="@+id/name"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp" />
-
-        <TextView
             android:id="@+id/genres_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
