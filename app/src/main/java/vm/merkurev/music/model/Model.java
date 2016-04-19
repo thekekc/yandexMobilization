@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by merkurev on 25.03.16.
+ * Abstract realization of IModel, working with listeners array
  */
 public class Model implements IModel {
     private final List<ModelListener> listeners = new ArrayList<>();
+
     @Override
     public void addListener(ModelListener modelListener) {
         listeners.add(modelListener);
@@ -17,18 +18,16 @@ public class Model implements IModel {
     public void removeListener(ModelListener modelListener) {
         listeners.remove(modelListener);
     }
-    protected void notifyListeners(){
-        if (listeners!=null){
-            for (int i = 0; i < listeners.size(); i++) {
-                listeners.get(i).onUpdate();
-            }
+
+    protected void notifyListeners() {
+        for (int i = 0; i < listeners.size(); i++) {
+            listeners.get(i).onUpdate();
         }
     }
-    protected void notifyListenersError(){
-        if (listeners!=null){
-            for (int i = 0; i < listeners.size(); i++) {
-                listeners.get(i).onError();
-            }
+
+    protected void notifyListenersError() {
+        for (int i = 0; i < listeners.size(); i++) {
+            listeners.get(i).onError();
         }
 
     }

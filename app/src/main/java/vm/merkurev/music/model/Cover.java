@@ -3,7 +3,7 @@ package vm.merkurev.music.model;
 import java.io.Serializable;
 
 /**
- * Created by merkurev on 26.03.16.
+ * Serializable Cover model, containing two cover images
  */
 public class Cover implements Serializable {
     String small;

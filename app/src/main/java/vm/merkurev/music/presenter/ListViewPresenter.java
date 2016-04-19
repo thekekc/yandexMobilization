@@ -17,7 +17,8 @@ import vm.merkurev.music.model.cache.ICache;
 import vm.merkurev.music.view.IListView;
 
 /**
- * Created by merkurev on 08.04.16.
+ * Presenter class, that takes almost all the manipulation with view
+ * and model and cache.
  */
 public class ListViewPresenter implements IListViewPresenter {
 
@@ -31,17 +32,21 @@ public class ListViewPresenter implements IListViewPresenter {
     private NetworkSingerModel networkSingerModel;
     private ICache fileCache;
     private AppContainer appContainer;
-    private int activeItem  = -1;
+    private int activeItem = -1;
     private int firstVisiblePosition = -1;
     private int padding = 0;
 
+    /**
+     * Model callback, when data from network is recieved
+     */
     private ModelListener modelListener = new ModelListener() {
         @Override
         public void onUpdate() {
             singers.clear();
             singers.addAll(networkSingerModel.getDataList());
+            //save result in cache to reuse if no connection
             fileCache.putInCache(singers);
-            if (isAttached){
+            if (isAttached) {
                 listView.updateList();
                 listView.setActiveItem(activeItem);
                 listView.scrollToPosition(firstVisiblePosition, padding);
@@ -50,11 +55,13 @@ public class ListViewPresenter implements IListViewPresenter {
 
         @Override
         public void onError() {
-            if(isAttached) listView.showError(appContainer.getString(R.string.NETWORK_ERROR));
+            if (isAttached) listView.showError(appContainer.getString(R.string.NETWORK_ERROR));
         }
     };
-    public ListViewPresenter(IListView listView, Activity activity){
+
+    public ListViewPresenter(IListView listView, Activity activity) {
         this.listView = listView;
+        //get Application class containing cache and network model objects
         appContainer = (AppContainer) activity.getApplication();
         fileCache = appContainer.getFileCache();
         networkSingerModel = appContainer.getNetworkSingerModel();
@@ -67,7 +74,7 @@ public class ListViewPresenter implements IListViewPresenter {
         //if we have singers from network don't update them
         //until app restart
         singers.clear();
-        if(networkSingerModel.getDataList().size()>0){
+        if (networkSingerModel.getDataList().size() > 0) {
             singers.addAll(networkSingerModel.getDataList());
         } else {
             networkSingerModel.updateSingers();
@@ -82,12 +89,7 @@ public class ListViewPresenter implements IListViewPresenter {
     }
 
     @Override
-    public void onResume() {
-        listView.scrollToPosition(firstVisiblePosition, padding);
-    }
-
-    @Override
-    public void onDestroy() {
+    public void onStop() {
         isAttached = false;
         networkSingerModel.removeListener(modelListener);
         saveScrollPosition();
@@ -107,12 +109,12 @@ public class ListViewPresenter implements IListViewPresenter {
         return singers;
     }
 
-    private void saveScrollPosition(){
+    private void saveScrollPosition() {
         savePosition(listView.getFirstVisible(), FIRST_VISIBLE_POSITION);
         savePosition(listView.getPadding(), PADDING);
     }
 
-    private void savePosition(int activePosition, String id){
+    private void savePosition(int activePosition, String id) {
         SharedPreferences preferences = appContainer.getSharedPreferences(
                 APP_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -120,7 +122,7 @@ public class ListViewPresenter implements IListViewPresenter {
         editor.apply();
     }
 
-    private int loadPosition(String id){
+    private int loadPosition(String id) {
         SharedPreferences preferences = appContainer.getSharedPreferences(
                 APP_PREFERENCES, Context.MODE_PRIVATE);
         return preferences.getInt(id, -1);

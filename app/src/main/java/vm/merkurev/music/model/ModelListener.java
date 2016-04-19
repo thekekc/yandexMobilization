@@ -1,9 +1,10 @@
 package vm.merkurev.music.model;
 
 /**
- * Created by merkurev on 26.03.16.
+ * Model Callback
  */
 public interface ModelListener {
     void onUpdate();
+
     void onError();
 }

@@ -1,4 +1,5 @@
 package vm.merkurev.music.view;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -7,10 +8,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
 import vm.merkurev.music.R;
 import vm.merkurev.music.model.Singer;
+
+/**
+ * List adapter class
+ */
 
 
 public class SingerListAdapter extends BaseAdapter {
@@ -48,12 +56,15 @@ public class SingerListAdapter extends BaseAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
         viewHolder.name.setText(singers.get(i).getName());
         viewHolder.genres.setText(getGenres(singers.get(i).getGenres()));
+        //using plurals to make counting nouns plural
         String albumsString = context.getResources().getQuantityString(R.plurals.albums,
-                singers.get(i).getAlbums(),singers.get(i).getAlbums());
+                singers.get(i).getAlbums(), singers.get(i).getAlbums());
         String tracksString = context.getResources().getQuantityString(R.plurals.tracks,
-                singers.get(i).getTracks(),singers.get(i).getTracks());
+                singers.get(i).getTracks(), singers.get(i).getTracks());
 
-        viewHolder.amounts.setText(albumsString +", " + tracksString);
+        viewHolder.amounts.setText(albumsString + ", " + tracksString);
+
+        //download images and cache them with picasso library
         Picasso.with(context).load(singers.get(i).getCover().getSmall()).into(viewHolder.coverSmall);
         return view;
     }
@@ -95,7 +106,9 @@ public class SingerListAdapter extends BaseAdapter {
         return builder.toString();
     }
 
-
+    /**
+     * ViewHolder class that makes adapter to reuse objects
+     */
     private class ViewHolder {
         private TextView name;
         private TextView genres;

@@ -22,6 +22,9 @@ import vm.merkurev.music.model.Singer;
  * This fragment is either contained in a {@link SingerListActivity}
  * in two-pane mode (on tablets) or a {@link SingerDetailActivity}
  * on handsets.
+ * <p/>
+ * I decided not to use presenter here, because this fragment is quite simple, and it will be
+ * pretty much hard to use animation in presenter
  */
 public class SingerDetailFragment extends Fragment {
     /**
@@ -30,9 +33,6 @@ public class SingerDetailFragment extends Fragment {
      */
     public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
     private Singer mItem;
 
     private ImageView bigCover;
@@ -49,15 +49,13 @@ public class SingerDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
             mItem = (Singer) getArguments().getSerializable(ARG_ITEM_ID);
         }
 
+        //new transition animation
         if (Build.VERSION.SDK_INT >= 21) {
             FragmentActivity activityCompat = getActivity();
-            if (activityCompat.getWindow().getSharedElementEnterTransition()!=null) {
+            if (activityCompat.getWindow().getSharedElementEnterTransition() != null) {
                 activityCompat.getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
                     @Override
                     public void onTransitionStart(Transition transition) {
@@ -66,6 +64,7 @@ public class SingerDetailFragment extends Fragment {
 
                     @Override
                     public void onTransitionEnd(Transition transition) {
+                        //onransition end load big picture, before use small one
                         if (bigCover != null) {
                             Picasso.with(getActivity())
                                     .load(mItem.getCover().getBig())
@@ -99,6 +98,7 @@ public class SingerDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //setting view fields
         View rootView = inflater.inflate(R.layout.fragment_singer_detail, container, false);
         if (mItem != null) {
             TextView desc = (TextView) rootView.findViewById(R.id.description);
@@ -107,14 +107,16 @@ public class SingerDetailFragment extends Fragment {
             }
 
             bigCover = (ImageView) rootView.findViewById(R.id.coverBig);
+            //load big picture from very beginning if animation is not implemented(SDK<21)
             if (bigCover != null) {
-                if(Build.VERSION.SDK_INT>=21){
+                if (Build.VERSION.SDK_INT >= 21) {
                     Picasso.with(getActivity()).load(mItem.getCover().getSmall()).into(bigCover);
-                }else {
+                } else {
                     Picasso.with(getActivity()).load(mItem.getCover().getBig()).into(bigCover);
                 }
             }
 
+            //string plurals
             String albumsString = getActivity().getResources().getQuantityString(R.plurals.albums,
                     mItem.getAlbums(), mItem.getAlbums());
             String tracksString = getActivity().getResources().getQuantityString(R.plurals.tracks,

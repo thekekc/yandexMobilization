@@ -2,6 +2,7 @@ package vm.merkurev.music.model.cache;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,15 +16,24 @@ import java.util.List;
 
 import vm.merkurev.music.model.Singer;
 
-public class FileCache implements ICache{
+/**
+ * File cache implementation of ICache
+ * saves to cache file List of singers
+ * and reads it back
+ */
+
+public class FileCache implements ICache {
     private static final String FILENAME = "singer_cache";
     private static final String ERROR = "CACHE_ERROR";
     private Context context;
-    public FileCache(Context context){
+
+    public FileCache(Context context) {
         this.context = context;
     }
+
     @Override
     public void putInCache(List<Singer> cacheObject) {
+        //parsing object into string and writing it to file
         Gson gson = new Gson();
         String toFile = gson.toJson(cacheObject, cacheObject.getClass());
         File cachedFile = getCachedFile();
@@ -44,6 +54,7 @@ public class FileCache implements ICache{
 
     @Override
     public List<Singer> getFromCache() {
+        //parsing string read from file into List<Singers>
         ArrayList<Singer> singers = new ArrayList<>();
         File cachedFile = getCachedFile();
         long length = cachedFile.length();
@@ -54,7 +65,9 @@ public class FileCache implements ICache{
                 fileInputStream.read(bytes);
                 String fromJson = new String(bytes);
                 Gson gson = new Gson();
-                Type type = new TypeToken<List<Singer>>(){}.getType();
+                //token is necessary, because of java type erasion
+                Type type = new TypeToken<List<Singer>>() {
+                }.getType();
                 singers = gson.fromJson(fromJson, type);
             } catch (IOException e) {
                 Log.d(ERROR, "putInCache: cannot read to file " + e.getMessage());
@@ -69,10 +82,11 @@ public class FileCache implements ICache{
 
     @Override
     public void invalidate() {
+        //empty cache
         putInCache(new ArrayList<Singer>());
     }
 
-    private File getCachedFile(){
+    private File getCachedFile() {
         File cachedFilePath = context.getCacheDir();
         return new File(cachedFilePath, FILENAME);
     }

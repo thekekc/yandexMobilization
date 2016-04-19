@@ -1,9 +1,10 @@
 package vm.merkurev.music.model;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by merkurev on 24.03.16.
+ * Serializable singer model object
  */
 public class Singer implements Serializable {
     private Integer id;

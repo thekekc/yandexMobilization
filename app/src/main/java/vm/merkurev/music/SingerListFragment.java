@@ -2,23 +2,12 @@ package vm.merkurev.music;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
-
-import vm.merkurev.music.appContainer.AppContainer;
-import vm.merkurev.music.model.ModelListener;
-import vm.merkurev.music.model.NetworkSingerModel;
 import vm.merkurev.music.model.Singer;
-import vm.merkurev.music.model.cache.FileCache;
-import vm.merkurev.music.model.cache.ICache;
 import vm.merkurev.music.presenter.IListViewPresenter;
 import vm.merkurev.music.presenter.ListViewPresenter;
 import vm.merkurev.music.view.IListView;
@@ -36,23 +25,17 @@ import vm.merkurev.music.view.SingerListAdapter;
 public class SingerListFragment extends ListFragment implements IListView {
 
 
+    /**
+     * Presenter that takes care of all view manipulation
+     */
     private IListViewPresenter presenter;
 
-    /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
-     */
-    private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     /**
      * The fragment's current callback object, which is notified of list item
      * clicks.
      */
     private Callbacks mCallbacks = sDummyCallbacks;
-    /**
-     * The current activated item position. Only used on tablets.
-     */
-    private int mActivatedPosition = ListView.INVALID_POSITION;
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -86,7 +69,9 @@ public class SingerListFragment extends ListFragment implements IListView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //create presenter
         presenter = new ListViewPresenter(this, getActivity());
+        //set custom adapter for listView
         setListAdapter(new SingerListAdapter(presenter.getSingers(),this.getActivity(), R.layout.singer_list_item));
     }
 
@@ -100,18 +85,12 @@ public class SingerListFragment extends ListFragment implements IListView {
     @Override
     public void onStart() {
         super.onStart();
-        //presenter.onResume();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-       presenter.onDestroy();
+       presenter.onStop();
     }
 
     @Override
@@ -129,17 +108,14 @@ public class SingerListFragment extends ListFragment implements IListView {
         super.onDetach();
         // Reset the active callbacks interface to the dummy implementation.
         mCallbacks = sDummyCallbacks;
-//        presenter.onDestroy();
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
         getListView().setItemChecked(position, true);
-        mActivatedPosition = position;
         presenter.itemSelected(position, view);
     }
-
 
     @Override
     public void updateList() {
@@ -159,8 +135,10 @@ public class SingerListFragment extends ListFragment implements IListView {
         mCallbacks.onItemSelected(presenter.getSingers().get(position), view);
     }
 
+
     @Override
     public void setActiveItem(int position) {
+        //Item check works only in pads
         getListView().setItemChecked(position, true);
     }
 
@@ -172,11 +150,15 @@ public class SingerListFragment extends ListFragment implements IListView {
     @Override
     public int getPadding() {
         View v = getListView().getChildAt(0);
+        //returns padding from top of first item, if it is not fully shown,
+        //to return scroll in last seen position
         return (v == null) ? 0 : (v.getTop() - getListView().getPaddingTop());
     }
 
     @Override
     public void scrollToPosition(final int position, final int padding) {
+        //hack way, to make list scroll to saved position after application is shut down
+        //if activity is just recreated everything works fine without post
         getListView().post(new Runnable() {
             @Override
             public void run() {

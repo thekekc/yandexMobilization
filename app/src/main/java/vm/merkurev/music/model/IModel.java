@@ -1,9 +1,10 @@
 package vm.merkurev.music.model;
 
 /**
- * Created by merkurev on 25.03.16.
+ * IModel interface creating methods to work with listeners
  */
 public interface IModel {
     void addListener(ModelListener modelListener);
+
     void removeListener(ModelListener modelListener);
 }
