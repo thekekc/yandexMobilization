@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
 
 /**
- * Created by merkurev on 02.04.16.
+ * List click test and rotation
  */
 @RunWith(AndroidJUnit4.class)
 public class ListClickCase extends ActivityInstrumentationTestCase2{
@@ -62,8 +62,5 @@ public class ListClickCase extends ActivityInstrumentationTestCase2{
     public void rotationTest(){
        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-    private void test(){
-
     }
 }

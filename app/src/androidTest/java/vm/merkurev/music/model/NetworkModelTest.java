@@ -12,7 +12,7 @@ import android.support.test.runner.AndroidJUnit4;
 import static org.mockito.Mockito.verify;
 
 /**
- * Created by merkurev on 25.03.16.
+ * network test.
  */
 @RunWith(AndroidJUnit4.class)
 public class NetworkModelTest {

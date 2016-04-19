@@ -1,16 +1,18 @@
 package vm.merkurev.music.model;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import vm.merkurev.music.SingerListActivity;
 import vm.merkurev.music.model.cache.FileCache;
 import vm.merkurev.music.model.cache.ICache;
@@ -32,8 +34,6 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
         super.setUp();
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         getInstrumentation().waitForIdleSync();
-        Instrumentation instrumentation = getInstrumentation();
-       // context = getInstrumentation().getContext().getApplicationContext();
         context = getActivity();
         cache = new FileCache(context);
         Singer singer = new Singer();
