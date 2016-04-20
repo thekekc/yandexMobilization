@@ -71,8 +71,6 @@ public class SingerListFragment extends ListFragment implements IListView {
         super.onCreate(savedInstanceState);
         //create presenter
         presenter = new ListViewPresenter(this, getActivity());
-        //set custom adapter for listView
-        setListAdapter(new SingerListAdapter(presenter.getSingers(),this.getActivity(), R.layout.singer_list_item));
     }
 
     @Override
@@ -80,11 +78,6 @@ public class SingerListFragment extends ListFragment implements IListView {
         super.onViewCreated(view, savedInstanceState);
         setEmptyText(getActivity().getString(R.string.empty));
         presenter.onCreate();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -119,6 +112,10 @@ public class SingerListFragment extends ListFragment implements IListView {
 
     @Override
     public void updateList() {
+        if(getListAdapter()==null){
+            //set custom adapter for listView
+            setListAdapter(new SingerListAdapter(presenter.getSingers(),this.getActivity(), R.layout.singer_list_item));
+        }
         SingerListAdapter singerListAdapter = (SingerListAdapter) getListAdapter();
         singerListAdapter.notifyDataSetChanged();
     }
