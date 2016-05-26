@@ -48,8 +48,6 @@ public class ListViewPresenter implements IListViewPresenter {
             fileCache.putInCache(singers);
             if (isAttached) {
                 listView.updateList();
-                listView.setActiveItem(activeItem);
-                listView.scrollToPosition(firstVisiblePosition, padding);
             }
         }
 

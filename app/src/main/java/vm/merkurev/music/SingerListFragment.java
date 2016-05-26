@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import vm.merkurev.music.model.Singer;
 import vm.merkurev.music.presenter.IListViewPresenter;
 import vm.merkurev.music.presenter.ListViewPresenter;
@@ -46,7 +48,7 @@ public class SingerListFragment extends ListFragment implements IListView {
         /**
          * Callback for when an item has been selected.
          */
-         void onItemSelected(Singer entity, View holder);
+        void onItemSelected(Singer entity, View holder);
     }
 
     /**
@@ -83,7 +85,7 @@ public class SingerListFragment extends ListFragment implements IListView {
     @Override
     public void onStop() {
         super.onStop();
-       presenter.onStop();
+        presenter.onStop();
     }
 
     @Override
@@ -112,9 +114,9 @@ public class SingerListFragment extends ListFragment implements IListView {
 
     @Override
     public void updateList() {
-        if(getListAdapter()==null){
+        if (getListAdapter() == null) {
             //set custom adapter for listView
-            setListAdapter(new SingerListAdapter(presenter.getSingers(),this.getActivity(), R.layout.singer_list_item));
+            setListAdapter(new SingerListAdapter(presenter.getSingers(), this.getActivity(), R.layout.singer_list_item));
         }
         SingerListAdapter singerListAdapter = (SingerListAdapter) getListAdapter();
         singerListAdapter.notifyDataSetChanged();
